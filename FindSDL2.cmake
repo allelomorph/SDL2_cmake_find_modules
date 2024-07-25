@@ -293,21 +293,10 @@ if(SDL2_LIBRARY)
 
 endif()
 
-# Read SDL2 version
-if(SDL2_INCLUDE_DIR AND EXISTS "${SDL2_INCLUDE_DIR}/SDL_version.h")
-  file(STRINGS "${SDL2_INCLUDE_DIR}/SDL_version.h" SDL2_VERSION_MAJOR_LINE REGEX "^#define[ \t]+SDL_MAJOR_VERSION[ \t]+[0-9]+$")
-  file(STRINGS "${SDL2_INCLUDE_DIR}/SDL_version.h" SDL2_VERSION_MINOR_LINE REGEX "^#define[ \t]+SDL_MINOR_VERSION[ \t]+[0-9]+$")
-  file(STRINGS "${SDL2_INCLUDE_DIR}/SDL_version.h" SDL2_VERSION_PATCH_LINE REGEX "^#define[ \t]+SDL_PATCHLEVEL[ \t]+[0-9]+$")
-  string(REGEX REPLACE "^#define[ \t]+SDL_MAJOR_VERSION[ \t]+([0-9]+)$" "\\1" SDL2_VERSION_MAJOR "${SDL2_VERSION_MAJOR_LINE}")
-  string(REGEX REPLACE "^#define[ \t]+SDL_MINOR_VERSION[ \t]+([0-9]+)$" "\\1" SDL2_VERSION_MINOR "${SDL2_VERSION_MINOR_LINE}")
-  string(REGEX REPLACE "^#define[ \t]+SDL_PATCHLEVEL[ \t]+([0-9]+)$" "\\1" SDL2_VERSION_PATCH "${SDL2_VERSION_PATCH_LINE}")
-  set(SDL2_VERSION_STRING ${SDL2_VERSION_MAJOR}.${SDL2_VERSION_MINOR}.${SDL2_VERSION_PATCH})
-  unset(SDL2_VERSION_MAJOR_LINE)
-  unset(SDL2_VERSION_MINOR_LINE)
-  unset(SDL2_VERSION_PATCH_LINE)
-  unset(SDL2_VERSION_MAJOR)
-  unset(SDL2_VERSION_MINOR)
-  unset(SDL2_VERSION_PATCH)
+if(SDL2_INCLUDE_DIR)
+  # set SDL2_VERSION
+  include(Sdl2VersionFromHeader)
+  SDL2_version_from_header(SDL_version.h)
 endif()
 
 include(FindPackageHandleStandardArgs)
@@ -319,7 +308,7 @@ endif()
 
 find_package_handle_standard_args(SDL2
                                   REQUIRED_VARS ${SDL2_REQUIRED_VARS}
-                                  VERSION_VAR SDL2_VERSION_STRING)
+                                  VERSION_VAR SDL2_VERSION)
 
 mark_as_advanced(SDL2_PATH
                  SDL2_NO_DEFAULT_PATH
