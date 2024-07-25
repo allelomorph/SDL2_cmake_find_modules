@@ -185,9 +185,11 @@ endif()
 set(SDL2_IMAGE_LIBRARIES ${SDL2_IMAGE_LIBRARY})
 set(SDL2_IMAGE_INCLUDE_DIRS ${SDL2_IMAGE_INCLUDE_DIR})
 
-include(FindPackageHandleStandardArgs)
+if(NOT COMMAND find_package_handle_standard_args)
+  include(FindPackageHandleStandardArgs)
+endif()
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(SDL2_image
+find_package_handle_standard_args(SDL2_image
                                   REQUIRED_VARS SDL2_IMAGE_LIBRARIES SDL2_IMAGE_INCLUDE_DIRS
                                   VERSION_VAR SDL2_IMAGE_VERSION)
 

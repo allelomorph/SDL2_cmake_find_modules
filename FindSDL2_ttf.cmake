@@ -185,9 +185,11 @@ endif()
 set(SDL2_TTF_LIBRARIES ${SDL2_TTF_LIBRARY})
 set(SDL2_TTF_INCLUDE_DIRS ${SDL2_TTF_INCLUDE_DIR})
 
-include(FindPackageHandleStandardArgs)
+if(NOT COMMAND find_package_handle_standard_args)
+  include(FindPackageHandleStandardArgs)
+endif()
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(SDL2_ttf
+find_package_handle_standard_args(SDL2_ttf
                                   REQUIRED_VARS SDL2_TTF_LIBRARIES SDL2_TTF_INCLUDE_DIRS
                                   VERSION_VAR SDL2_TTF_VERSION)
 

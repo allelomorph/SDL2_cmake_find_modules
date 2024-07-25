@@ -299,7 +299,9 @@ if(SDL2_INCLUDE_DIR)
   SDL2_version_from_header(SDL_version.h)
 endif()
 
-include(FindPackageHandleStandardArgs)
+if(NOT COMMAND find_package_handle_standard_args)
+  include(FindPackageHandleStandardArgs)
+endif()
 
 set(SDL2_REQUIRED_VARS SDL2_LIBRARY SDL2_INCLUDE_DIR)
 if(SDL2MAIN_LIBRARY)
